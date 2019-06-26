@@ -12,39 +12,45 @@
  * limitations under the License.
  */
 
-/**
- * Sample access control list.
- */
-rule EverybodyCanReadEverything {
-    description: "Allow all participants read access to all resources"
-    participant: "com.pax.tourism.SampleParticipant"
-    operation: READ
-    resource: "com.pax.tourism.*"
-    action: ALLOW
-}
-
-rule EverybodyCanSubmitTransactions {
-    description: "Allow all participants to submit transactions"
-    participant: "com.pax.tourism.SampleParticipant"
-    operation: CREATE
-    resource: "com.pax.tourism.SampleTransaction"
-    action: ALLOW
-}
-
-rule OwnerHasFullAccessToTheirAssets {
-    description: "Allow all participants full access to their assets"
-    participant(p): "com.pax.tourism.SampleParticipant"
-    operation: ALL
-    resource(r): "com.pax.tourism.SampleAsset"
-    condition: (r.owner.getIdentifier() === p.getIdentifier())
-    action: ALLOW
-}
-
-rule SystemACL {
-  description:  "System ACL to permit all access"
-  participant: "org.hyperledger.composer.system.Participant"
+rule TouristCanCURDHimself{
+  description: "view self"
+  participant(p): "com.pax.tourism.Tourist"
   operation: ALL
-  resource: "org.hyperledger.composer.system.**"
+  resource(r): "com.pax.tourism.Tourist"
+  condition: (p.getIdentifier() == r.getIdentifier())
+  action: ALLOW
+}
+
+rule TouristCanViewOthers{
+  description: "View others"
+  participant: "com.pax.tourism.Tourist"
+  operation: READ
+  resource: "com.pax.tourism.Tourist"
+  action: ALLOW
+}
+
+rule TouristCanCreateLocationToVisit{
+  description: "CreateLocationToVisit"
+  participant: "com.pax.tourism.Tourist"
+  operation: CREATE
+  resource: "com.pax.tourism.LocationToVisit"
+  action: ALLOW
+}
+
+rule TouristCanCreateVisitLocation{
+  description: "Create VisitLocation"
+  participant: "com.pax.tourism.Tourist"
+  operation: CREATE
+  resource: "com.pax.tourism.VisitLocation"
+  action: ALLOW
+}
+
+
+rule TouristCanReadLocations{
+  description: "read locations"
+  participant: "com.pax.tourism.Tourist"
+  operation: READ
+  resource: "com.pax.tourism.Destination"
   action: ALLOW
 }
 

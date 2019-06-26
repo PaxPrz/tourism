@@ -12,31 +12,52 @@
  * limitations under the License.
  */
 
-/**
- * Write your model definitions here
- */
-
 namespace com.pax.tourism
 
-participant SampleParticipant identified by participantId {
-  o String participantId
-  o String firstName
-  o String lastName
+participant Tourist identified by emailId{
+  o String emailId
+  o String name
+  o Integer age
+  o String gender
+  o String country
+  o Double balance
+  o Integer phoneNumber
+  --> Destination[] visited optional
+  --> Destination[] toVisit optional
 }
 
-asset SampleAsset identified by assetId {
-  o String assetId
-  --> SampleParticipant owner
-  o String value
+asset Destination identified by destinationName{
+  o String destinationName
+  o Double latitude
+  o Double longitude
+  o String[] specialities optional
+  o String[] hotels optional
 }
 
-transaction SampleTransaction {
-  --> SampleAsset asset
-  o String newValue
+transaction CreateTourist{
+  o String emailId
+  o String name
+  o Integer age
+  o String gender
+  o String country
+  o Double balance
+  o Integer phoneNumber
 }
 
-event SampleEvent {
-  --> SampleAsset asset
-  o String oldValue
-  o String newValue
+transaction CreateDestination{
+  o String destinationName
+  o Double latitude
+  o Double longitude
+  o String[] specialities
+  o String[] hotels
+}
+
+transaction LocationToVisit{
+  o String emailId
+  o String destinationName
+}
+
+transaction VisitLocation{
+  o String emailId
+  o String destinationName
 }
