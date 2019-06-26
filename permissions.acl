@@ -54,6 +54,15 @@ rule TouristCanReadLocations{
   action: ALLOW
 }
 
+rule TouristCanCreateRating{
+  description: "do Rating"
+  participant: "com.pax.tourism.Tourist"
+  operation: CREATE
+  resource: "com.pax.tourism.RateLocation"
+  action: ALLOW
+}
+
+
 rule NetworkAdminUser {
     description: "Grant business network administrators full access to user resources"
     participant: "org.hyperledger.composer.system.NetworkAdmin"

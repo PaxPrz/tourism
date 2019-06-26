@@ -30,6 +30,9 @@ asset Destination identified by destinationName{
   o String destinationName
   o Double latitude
   o Double longitude
+  o Double rating
+  o Integer noOfPeopleRated
+  o Integer noOfPeopleVisited
   o String[] specialities optional
   o String[] hotels optional
 }
@@ -60,4 +63,10 @@ transaction LocationToVisit{
 transaction VisitLocation{
   o String emailId
   o String destinationName
+}
+
+transaction RateLocation{
+  o String emailId
+  o String destinationName
+  o Double rating
 }
